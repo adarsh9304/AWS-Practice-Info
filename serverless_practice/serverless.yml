@@ -1,0 +1,15 @@
+service: serverlessFun-api
+frameworkVersion: "3"
+
+provider: 
+    name: aws
+    runtime: nodejs18.x
+    region: ap-south-1
+
+functions: 
+    serverlessFun:
+      handler: hello.handlerFun
+      events:
+        - httpApi:
+            path: /hello
+            method: GET
