@@ -1,0 +1,48 @@
+{
+  "Comment":"A Hello World example of the Amazon States Language using Pass states",
+  "StartAt":"Lambda Fire",
+  "States":{
+    "Lambda Fire":{
+      "Type":"Task",
+      "Resource":"arn:aws:lambda:us-west-1:867098943567:function:hello",
+      "Catch":[
+        {
+          "ErrorEquals":[
+            "Game Over",
+            "Game Over: Exception",
+            "Error Game Over:  "
+          ],
+          "Next":"CustomErrorFallback"
+        },
+        {
+          "ErrorEquals":[
+            "States.TaskFailed"
+          ],
+          "Next":"ReservedTypeFallback"
+        },
+        {
+          "ErrorEquals":[
+            "States.ALL"
+          ],
+          "Next":"CatchAllFallback"
+        }
+      ],
+      "End":true
+    },
+    "CustomErrorFallback":{
+      "Type":"Pass",
+      "Result":"This is a fallback from a custom lambda function exception",
+      "End":true
+    },
+    "ReservedTypeFallback":{
+      "Type":"Pass",
+      "Result":"This is a fallback from a reserved error code",
+      "End":true
+    },
+    "CatchAllFallback":{
+      "Type":"Pass",
+      "Result":"This is a fallback from a reserved error code",
+      "End":true
+    }
+  }
+}
